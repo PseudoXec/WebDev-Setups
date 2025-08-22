@@ -1,0 +1,56 @@
+Laravel Mini Blog Setup on Laragon
+Step-by-step guide to get a Laravel mini blog running locally using Laragon and MySQL.
+Prerequisites
+
+✅ Laragon (Full version recommended: PHP, MySQL, Node.js)
+
+✅ Composer (comes with Laragon Full)
+
+✅ VS Code or another code editor
+
+Step 1 – Prepare Laragon
+  Open Laragon.
+  Ensure Apache and MySQL are running (green lights).
+  Open WWW folder via Laragon → opens C:\laragon\www.
+  Remove any previous mini-blog folder or rename it (e.g., mini-blog-old).
+  Optionally, delete the old blog_db database in Adminer or HeidiSQL.
+  💡 Laragon auto-maps folders in www to .test domains like http://mini-blog.test/.
+
+Step 2 – Create a new Laravel project
+  Open Laragon → Menu → Terminal → CMD.
+  Navigate to the www folder:
+  cd C:\laragon\www
+  composer create-project laravel/laravel mini-blog
+  Open browser → http://mini-blog.test/
+  You should see the Laravel welcome page.
+  If .test domain fails, try http://localhost/mini-blog/.
+
+Step 3 – Configure the Database
+  Open Adminer or HeidiSQL via Laragon.
+  Create a database:
+  Name: blog_db
+  Charset/Collation: utf8_general_ai_ci (or utf8mb4 if available)
+  Open .env in VS Code and update:
+  DB_CONNECTION=mysql
+  DB_HOST=127.0.0.1
+  DB_PORT=3306
+  DB_DATABASE=blog_db
+  DB_USERNAME=root
+  DB_PASSWORD=
+  ⚠️ Uncomment lines if they have # at the start.
+
+Step 4 – Clear Cached Config
+  php artisan config:clear
+  Ensures Laravel reads the new database settings.
+
+Step 5 – Run Migrations
+  cd C:\laragon\www\mini-blog
+  php artisan migrate
+  You should see:
+    INFO  Preparing database.
+    Creating migration table ... DONE
+    Running migrations.
+    0001_01_01_000000_create_users_table ... DONE
+    0001_01_01_000001_create_cache_table ... DONE
+    0001_01_01_000002_create_jobs_table ... DONE
+    ✅ This confirms the database is connected and default tables are created.
