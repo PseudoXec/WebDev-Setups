@@ -1,0 +1,47 @@
+Step 6 – Set up Authentication
+  composer require laravel/ui
+  php artisan ui bootstrap --auth
+  npm install
+  npm run dev
+  Adds login, registration, and basic Bootstrap front-end.
+  Test: http://mini-blog.test/register.
+
+Step 7 – Create Post Model and Migration
+  php artisan make:model Post -m
+  Edit migration in database/migrations:
+  Schema::create('posts', function (Blueprint $table) {
+      $table->id();
+      $table->foreignId('user_id')->constrained()->onDelete('cascade');
+      $table->string('title');
+      $table->text('content');
+      $table->timestamps();
+  });
+  Run:
+    php artisan migrate
+    Now the posts table exists.
+
+Step 8 – Create Post Controller (CRUD)
+  php artisan make:controller PostController --resource
+  Add routes in routes/web.php:
+  use App\Http\Controllers\PostController;
+  Route::resource('posts', PostController::class);
+  Route::get('/', [PostController::class, 'index']);
+  Create Blade templates in resources/views/posts/:
+  index.blade.php → list posts
+  create.blade.php → add new post
+  edit.blade.php → edit post
+  show.blade.php → single post view
+
+Step 9 – Open Project in VS Code
+  Open VS Code → File → Open Folder → C:\laragon\www\mini-blog.
+  Edit:
+  routes/web.php → routing
+  resources/views/ → Blade templates
+  app/Models/Post.php → model logic
+  database/migrations/ → migrations
+  💡 Refresh browser after changes to see updates.
+
+Step 10 – Optional: Start Laravel Dev Server
+  php artisan serve
+  Opens at http://127.0.0.1:8000
+  Useful if you prefer not to use Laragon .test domains.
